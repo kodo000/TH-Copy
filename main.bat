@@ -27,33 +27,22 @@ exit /b
 :menu
 call :origin
 call :destination
+call :transfer
 
-call powershell -Command "Copy-Item -Path '%origin%' -Destination '%destination%' -Recurse"
-
-goto exit
+goto :exit
 
 :origin
 set /p origin="Origen: [38;2;147;151;155m"
 REM set /p origin=Origen: [38;2;57;255;20m
-
-if not exist "%origin%" (
-	echo [38;2;255;0;0mLa ruta de origen solicitada no existe. Presione enter para reintentar[0m
-	pause > nul
-	goto :origin
-)
-
 exit /b
 
 :destination
 set /p destination="Destino: [38;2;147;151;155m"
 REM set /p destination=Destino: [38;2;57;255;20m
+exit /b
 
-if not exist "%destination%" (
-	echo [38;2;255;0;0mLa ruta de destino solicitada no existe. Presione enter para reintentar[0m
-	pause > nul
-	goto :destination
-)
-
+:transfer
+call powershell -Command "Copy-Item -Path '%origin%' -Destination '%destination%' -Recurse"
 exit /b
 
 :exit
